@@ -7,7 +7,7 @@
     <ul class="navbar-nav">
       <li>
         <a
-          *ngIf="this.hardcodedAuthenticationService.isUserLoggedIn()"
+          *ngIf="this.basicAuth.getAuthenticatedUser()"
           routerLink="/welcome/shrawin"
           class="nav-link"
           >welcome</a
@@ -15,18 +15,22 @@
       </li>
       <li>
         <a
-          *ngIf="this.hardcodedAuthenticationService.isUserLoggedIn()"
+          *ngIf="this.basicAuth.getAuthenticatedUser()"
           routerLink="/todos"
           class="nav-link"
           >Todos</a
         >
+      </li>
+      <li>
+        <!-- <a routerLink="/corona" class="nav-link">Corona Update</a> -->
+        <a href="http://localhost:4200/corona" target="blank">Corona Update</a>
       </li>
     </ul>
 
     <ul class="navbar-nav navbar-collapse justify-content-end">
       <li>
         <a
-          *ngIf="!this.hardcodedAuthenticationService.isUserLoggedIn()"
+          *ngIf="!this.basicAuth.getAuthenticatedUser()"
           routerLink="/login"
           class="nav-link"
           >Login</a
@@ -34,7 +38,7 @@
       </li>
       <li>
         <a
-          *ngIf="this.hardcodedAuthenticationService.isUserLoggedIn()"
+          *ngIf="this.basicAuth.getAuthenticatedUser()"
           routerLink="/logout"
           class="nav-link"
           >Logout</a

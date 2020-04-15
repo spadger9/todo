@@ -1,39 +1,54 @@
-import { HardcodedAuthenticationService } from "./../service/hardcoded-authentication.service";
+import { BasicAuthenticationService } from "./../service/basic-authentication.service";
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.css"]
+  styleUrls: ["./login.component.css"],
 })
 export class LoginComponent implements OnInit {
-  userName = "shrawin";
+  userName = "in28minutes";
   password = "";
   errorMessage = "Invalid credentials";
   invalidLogin = false;
 
   constructor(
     private router: Router,
-    private hardcodedAuthenticationService: HardcodedAuthenticationService
+    private basicAuthService: BasicAuthenticationService
   ) {}
 
   ngOnInit() {}
 
-  handleLogin() {
-    if (
-      this.hardcodedAuthenticationService.authenticate(
-        this.userName,
-        this.password
-      )
-    ) {
-      this.router.navigate(["welcome", this.userName]);
-      this.invalidLogin = false;
-    } else {
-      this.invalidLogin = true;
-    }
+  handleBasicAuthLogin() {
+    this.basicAuthService
+      .executeBasicAuthenticationService(this.userName, this.password)
+      .subscribe(
+        (data) => {
+          console.log(data),
+            this.router.navigate(["welcome", this.userName]),
+            (this.invalidLogin = false);
+        },
 
-    // console.log(this.userName);
-    // console.log(this.password);
+        (error) => {
+          console.log(`Error loggin in: ${error} `), (this.invalidLogin = true);
+        }
+      );
+  }
+
+  handleJWTAuthLogin() {
+    this.basicAuthService
+      .executeJWTAuthenticationService(this.userName, this.password)
+      .subscribe(
+        (data) => {
+          console.log(data),
+            this.router.navigate(["welcome", this.userName]),
+            (this.invalidLogin = false);
+        },
+
+        (error) => {
+          console.log(`Error loggin in: ${error} `), (this.invalidLogin = true);
+        }
+      );
   }
 }

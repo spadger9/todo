@@ -1,0 +1,98 @@
+<div class="coronaBody">
+  <div class="container">
+    <form
+      (ngSubmit)="!meroForm.invalid && getCovidData(country)"
+      #meroForm="ngForm"
+    >
+      <div class="form-group">
+        <label for="country"> Country List</label>
+        <select
+          class="form-control"
+          type="submit"
+          #description="ngModel"
+          id="country"
+          name="country"
+          [(ngModel)]="country"
+        >
+          <option *ngFor="let coun of randomArray">{{ coun }}</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-success">Submit</button>
+      <button type="reset" class="btn btn-warning" (click)="reset()">
+        Clear
+      </button>
+    </form>
+  </div>
+  <br />
+  <div class="container" *ngIf="load && description.value !== ''">
+    <h2 *ngIf="description.value !== ''">
+      Total Result back for {{ country }} since {{ startDay }}
+    </h2>
+    <div>
+      <h2 class="alert alert-warning">
+        Total Active Cases: {{ totalActiveCases }}
+      </h2>
+      <h2 class="alert alert-success">
+        Total Recoveries: {{ totalRecoveries }}
+      </h2>
+      <h2 class="alert alert-danger">Total Deaths: {{ totalDeaths }}</h2>
+    </div>
+  </div>
+  <div class="container">
+    <button
+      type="button"
+      (click)="showDaily()"
+      class="btn btn-info"
+      *ngIf="load"
+    >
+      {{ buttonName }}
+    </button>
+
+    <table class="table" *ngIf="dailyValues && load">
+      <thead>
+        <tr>
+          <th>inquiryDate</th>
+          <th>Confirmed</th>
+          <th>Recoveries</th>
+          <th>Deaths</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let co of cList">
+          <td>{{ co.date | date }}</td>
+          <td>{{ co.confirmed }}</td>
+          <td>{{ co.recovered }}</td>
+          <td class="alert alert-danger">
+            {{ co.deaths }}
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Country</th>
+          <th>Confirmed</th>
+          <th>Recoveries</th>
+          <th>Deaths</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let co of covid | keyvalue">
+          <td>{{ co.key }}</td>
+          <td>{{ co.value[tot].confirmed }}</td>
+          <td>{{ co.value[tot].recovered }}</td>
+          <td class="alert alert-danger">
+            {{ co.value[tot].deaths }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

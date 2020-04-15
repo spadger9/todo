@@ -1,5 +1,14 @@
 <div class="container">
   <h1>Welcome {{ activeUsername }} to this application.</h1>
 
-  Manage your todos <a routerLink="/todos">here</a>
+  <!-- Manage your todos <a routerLink="/todos">here</a> -->
+</div>
+
+<div class="container">
+  <button (click)="getWelcomeWithParams()" class="btn btn-success">
+    Message
+  </button>
+</div>
+<div class="container">
+  {{ welcomeMessage }}
 </div>
