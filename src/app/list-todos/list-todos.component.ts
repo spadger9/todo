@@ -7,6 +7,7 @@ import {
   OnChanges,
   SimpleChanges,
   Input,
+  EventEmitter,
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { BsModalService } from "ngx-bootstrap/modal";
@@ -31,8 +32,8 @@ export class Todo {
   templateUrl: "./list-todos.component.html",
   styleUrls: ["./list-todos.component.css"],
 })
-export class ListTodosComponent implements OnInit, OnChanges {
-  @Input() todos: Todo[];
+export class ListTodosComponent implements OnInit {
+  todos: Todo[];
   message: String;
   currentDialog = null;
   bsModalRef: BsModalRef;
@@ -56,12 +57,6 @@ export class ListTodosComponent implements OnInit, OnChanges {
     });
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.todos) {
-      this.dataRefresh();
-    }
-  }
-
   dataRefresh() {
     this.service.retrieveAllToDos("shrawin").subscribe((response) => {
       console.log(response);
@@ -83,16 +78,7 @@ export class ListTodosComponent implements OnInit, OnChanges {
     this.bsModalRef.content.closeBtnName = "Close";
 
     console.log(`TODO ${id} update.`);
-
-    this.bsModalRef;
-    //this.router.navigate(["todos", id]);
-    //.then((res) => this.modalService.show(res));
-    /* this.service.findToDo("Shrawin", id).subscribe(response => {
-      console.log(response);
-      //this.message = `Found this ${id} successful!`;
-    }); */
-    // this.router.navigate(["todos"]);
-    this.dataRefresh();
+    this.message = `Update of Todo ${id} successful!`;
   }
 
   addToDo() {
@@ -100,12 +86,8 @@ export class ListTodosComponent implements OnInit, OnChanges {
     const initialState = { passedId: -1 };
     this.bsModalRef = this.modalService.show(TodoComponent, { initialState });
     this.bsModalRef.content.closeBtnName = "Close";
-    //this.router.navigate(["todos", -1]);
-    /* this.service.findToDo("Shrawin", id).subscribe(response => {
-      console.log(response);
-      //this.message = `Found this ${id} successful!`;
-      //this.dataRefresh();
-    }); */
-    this.dataRefresh();
+    this.message = `New ToDo created`;
+
+    // this.dataRefresh();
   }
 }

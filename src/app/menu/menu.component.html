@@ -4,7 +4,7 @@
   <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div><a routerLink="" class="navbar-brand"> HOME</a></div>
 
-    <ul class="navbar-nav">
+    <ul class="navbar-nav nav-pills">
       <li>
         <a
           *ngIf="this.basicAuth.getAuthenticatedUser()"
@@ -23,7 +23,8 @@
       </li>
       <li>
         <!-- <a routerLink="/corona" class="nav-link">Corona Update</a> -->
-        <a href="http://localhost:4200/corona" target="blank">Corona Update</a>
+        <!--  <a class="nav-link" href="http://localhost:80/corona" target="blank" -->
+        <a class="nav-link" routerLink="/corona"> Corona Update</a>
       </li>
     </ul>
 
